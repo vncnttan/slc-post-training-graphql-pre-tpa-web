@@ -1,0 +1,24 @@
+type User {
+  id: ID! #! = NOT NULL
+  name: String!
+  email: String!
+  username: String!
+}
+
+type Query {
+  getUser(id: ID!): User!
+  getAllUser:[User!]! 
+}
+
+input NewUser{
+  name: String!
+  email: String!
+  username: String!
+  password: String!
+} # Cuman buat parameter doang
+
+type Mutation {
+  createUser(inputUser: NewUser): User!
+  updateUser(id: ID!, inputUser: NewUser): User!
+  deleteUser(id: ID!): User!
+}

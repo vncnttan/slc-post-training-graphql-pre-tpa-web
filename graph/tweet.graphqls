@@ -1,0 +1,31 @@
+scalar Time
+
+directive @goField(
+	forceResolver: Boolean
+	name: String
+  omittable: Boolean
+) on INPUT_FIELD_DEFINITION | FIELD_DEFINITION
+
+type Tweet{
+    id: ID!,
+    title: String!
+    body: String!
+    createdAt: Time!
+    user: User! @goField(forceResolver: true)
+}
+
+directive @auth on INPUT_FIELD_DEFINITION | FIELD_DEFINITION
+
+input newTweet {
+    title: String!
+    body: String!
+    userId: ID!
+}
+
+extend type Query {
+    getAllTweet: [Tweet!]! @auth
+}
+
+extend type Mutation{
+    createTweet(inputTweet: newTweet!): Tweet! @auth
+}
